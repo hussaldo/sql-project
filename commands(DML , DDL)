@@ -1,0 +1,72 @@
+--DDL
+--creat_database
+create database store;
+use store;
+--creae_table
+ create table countries(
+ code int primary key,
+ name varchar(20) unique,
+ continent_name varchar(20) not null
+ );
+ 
+  --creae_table
+ use store ;
+ create table users(
+ id int primary key,
+ full_name varchar(20),
+ email varchar(20)unique,
+ gender char(1) check (gender='m' or gender = 'f'),
+ data_of_birth varchar(15),
+ created_at datetime,
+ country_code int,
+ foreign key (country_code) references countries(code)
+ );
+ 
+ --creae_table
+use store;
+create table orders(
+id int primary key,
+user_id int,
+status varchar(6) 
+check(status='start' or status = 'finish'),
+created_at datetime,
+foreign key (user_id) references users (id) 
+);
+
+--creae_table
+use store;
+create table order_products (
+order_id int,
+product_id int,
+quantity int default 0,
+primary key (order_id,product_id),
+foreign key(order_id) references orders(id),
+foreign key(product_id) references products(id)
+);
+
+--creae_table
+use store;
+create table ptoducts(
+id int primary key,
+name varchar(10) not null,
+price int default 0,
+status varchar(10) check(status='valid' or status = 'expired'),
+created_at datetime);
+
+use store;
+--DML
+insert into countries values(
+'123','hussain','asia');
+insert into users values(
+'123','huss','huss@gmail.com',
+'m','1998','4','444'
+);
+insert into orders values('2','2','start','2022-11-11 12:10:11');
+
+insert into products values('1','ali','3','valid','2022-11-11 12:10:11');
+insert into orders_products values('3','6','5');
+
+--update
+update countries set name='huss' where id='123';
+--delet
+delete from products where id = '1';
